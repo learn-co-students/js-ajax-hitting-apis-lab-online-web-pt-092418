@@ -11,7 +11,6 @@ function displayBranches() {
 
 function displayCommits() {
   const commits = JSON.parse(this.responseText);
-  debugger;
   const commitsList = `<ul>${commits
     .map(
       commit =>
@@ -26,7 +25,10 @@ function displayCommits() {
 
 function getCommits(el) {
   let req = new XMLHttpRequest();
+  debugger;
+  // IRL el.dataset.repo1 = "https://api.github.com/repos/octocat/boysenberry-repo-1"
   req.addEventListener('load', displayCommits);
+  // IRL req.open('GET', el.dataset.repo1 + '/commits')
   req.open('GET', 'https://api.github.com/repos/' +
     el.dataset.username +
     '/' + el.dataset.repository +
@@ -36,7 +38,10 @@ function getCommits(el) {
 
 function getBranches(el) {
   let req = new XMLHttpRequest();
-  req.addEventListener('load', displayBranches);
+  debugger;
+  // IRL el.dataset.repo1 = "https://api.github.com/repos/octocat/boysenberry-repo-1"
+  req.addEventListener('load', displayCommits);
+  // IRL req.open('GET', el.dataset.repo1 + '/branches')
   req.open('GET', 'https://api.github.com/repos/' +
     el.dataset.username +
     '/' + el.dataset.repository +
@@ -50,7 +55,7 @@ function displayRepositories() {
   let repoList = `<ul>${repos
     .map(repo => '<li>' + repo.name +
       '-<a href= ' + repo.html_url + '>URL</a>' +
-      '-<a href="#" data-repo1="' + repo.name + '" data-repo2="' + repo.owner.login + '"onclick="getCommits(this)">Get Commits</a>' +
+      '-<a href="#" data-repo1="' + repo.url + '"onclick="getCommits(this)">Get Commits</a>' +
       '-<a href="#" data-repo1="' + repo.url + '"onclick="getBranches(this)">Get Branches</a>' +
       '</li>').join('')}
     </ul>`;
